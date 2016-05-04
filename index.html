@@ -15,7 +15,7 @@
         var c=0;
         function load(){
             canvas=document.getElementById("mycanvas");
-            var cobj=canvas.getContext("2d");
+            var ctx=canvas.getContext("2d");
             //this is for adjust the canvas size
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
@@ -24,7 +24,7 @@
             var cols=0;
             for(var i=0; i<64; i++){
                 var rectObj={
-                    width:30,height:30,color:"grey",x:0,y:0,index:0
+                    width:30,height:30,color:"grey",x:0,y:0,index:0,type:null
                 }
                 if(i%8==0){
                     rows++;
@@ -36,62 +36,72 @@
                 arr.push(rectObj);
                 cols++;
             }
-            //cobj.save();
-            floor(arr,cobj);
-            right_wall(arr,cobj);
-            left_wall(arr,cobj);
-            //var myVar = setInterval(function(){floor(arr,cobj),right_wall(arr,cobj)}, 50);
+            //ctx.save();
+            //floor(arr,ctx);
+            //right_wall(arr,ctx);
+            left_wall(arr,ctx);
+            var myVar = setInterval(function(){floor(arr,ctx),right_wall(arr,ctx)}, 1);
         }
-
-        function floor(arr, cobj){
+//`
+        function floor(arr, ctx){
             for(var i=0; i<arr.length; i++){
-                cobj.beginPath();
-                cobj.fillStyle=arr[i].color;
-                cobj.setTransform(1,0.4,-1,0.5,410,400);
-                cobj.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
-                cobj.fillRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
+                ctx.beginPath();
+                ctx.fillStyle="Grey";
+                ctx.setTransform(1,0.4,-1,0.5,410,400);
+                ctx.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
+                ctx.fillRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
+                arr[i].type="floor";
             }
-            if(randomize(arr,cobj)%55 == 0){
+            //alert(arr[0].type);
+            if(randomize(arr,ctx)%55 == 0){
+                c=0;
                 for(var i=0; i<64; i++){
-                    arr[i].color = "grey";
+                    arr[i].color = "Grey";
                 }
             }
         }
-        function right_wall(arr,cobj){
+        function right_wall(arr,ctx){
             for(var i=0; i<arr.length; i++){
-                cobj.beginPath();
-                cobj.fillStyle=arr[i].color;
-                cobj.setTransform(1,0.4,0,1,380,145);
-                cobj.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
-                cobj.fillRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
+                ctx.beginPath();
+                ctx.fillStyle="LightGrey";
+                ctx.setTransform(1,0.4,0,1,380,145);
+                ctx.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
+                ctx.fillRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
+                arr[i].type="right_wall";
             }
-            if(randomize(arr,cobj)%55 == 0){
+            //alert(arr[0].type);
+            if(randomize(arr,ctx)%55 == 0){
+                c=0;
                 for(var i=0; i<64; i++){
                     arr[i].color = "LightGrey";
                 }
             }
         }
 
-        function left_wall(arr,cobj){
+        function left_wall(arr,ctx){
             for(var i=0; i<arr.length; i++){
-                cobj.beginPath();
-                cobj.fillStyle="DarkGrey";
-                cobj.setTransform(1,-0.495,0,1,140,264);
-                cobj.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
-                cobj.fillRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
+                ctx.beginPath();
+                ctx.fillStyle="DarkGrey";
+                ctx.setTransform(1,-0.495,0,1,140,264);
+                ctx.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
+                ctx.fillRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
             }
         }
-        function randomize(arr,cobj){
+        /*
+        generate the random cells for holes and balls
+         */
+        function randomize(arr,ctx){
             do{
                 var i = parseInt(64*Math.random());
-                if(arr[i].index < 8){
-                    arr[i].color = "black";
+                //add constraint of the holes and balls
+                if((arr[i].index < 8 && arr[i].type=="floor")||(arr[i].index > 55 && arr[i].type=="right_wall")) {
+                    arr[i].color="red";
                 }
-            }while(arr[i].color == "red" || arr[i].color == "black");
+            }while(arr[i].color == "red");
 
             arr[i].color = "red";
-            cobj.fillStyle=arr[i].color;
-            cobj.fillRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
+            ctx.fillStyle=arr[i].color;
+            ctx.fillRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
             return c++;
         }
     </script>
