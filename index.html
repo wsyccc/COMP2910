@@ -11,6 +11,7 @@
         /* make the body fill the window */
         html, body {
             margin: 0px;
+            padding: 0px;
             width: 100%;
             height: 100%;
             overflow: hidden;
@@ -27,7 +28,7 @@
             canvas=document.getElementById("mycanvas");
             var ctx=canvas.getContext("2d");
             //this is for adjust the canvas size
-            //resize(canvas);
+            resize(canvas);
             var arr=[];
             var rows=0;
             var cols=0;
@@ -49,7 +50,7 @@
             //floor(arr,ctx);
             //right_wall(arr,ctx);
             left_wall(arr,ctx);
-            var myVar = setInterval(function(){floor(arr,ctx),right_wall(arr,ctx)}, 1);
+            var myVar = setInterval(function(){floor(arr,ctx),right_wall(arr,ctx)}, 100);
         }
 //`
         function floor(arr, ctx){
@@ -113,25 +114,18 @@
             ctx.fillRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
             return c++;
         }
-        function resize(gl) {
-            var realToCSSPixels = window.devicePixelRatio || 1;
-
-            // Lookup the size the browser is displaying the canvas in CSS pixels
-            // and compute a size needed to make our drawingbuffer match it in
-            // device pixels.
-            var displayWidth  = Math.floor(gl.canvas.clientWidth  * realToCSSPixels);
-            var displayHeight = Math.floor(gl.canvas.clientHeight * realToCSSPixels);
+        function resize(canvas) {
+            // Lookup the size the browser is displaying the canvas.
+            var displayWidth  = canvas.clientWidth;
+            var displayHeight = canvas.clientHeight;
 
             // Check if the canvas is not the same size.
-            if (gl.canvas.width  != displayWidth ||
-                    gl.canvas.height != displayHeight) {
+            if (canvas.width  != displayWidth ||
+                    canvas.height != displayHeight) {
 
                 // Make the canvas the same size
-                gl.canvas.width  = displayWidth;
-                gl.canvas.height = displayHeight;
-
-                // Set the viewport to match
-                gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+                canvas.width  = displayWidth;
+                canvas.height = displayHeight;
             }
         }
     </script>
