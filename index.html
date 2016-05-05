@@ -19,7 +19,7 @@
             overflow: hidden;
         }
         /* make any canvas fill its container */
-        canvas {
+        .container,canvas {
             margin: 0px auto;
             width: 100%;
             height: 100%;
@@ -31,16 +31,6 @@
         function load(){
             canvas=document.getElementById("mycanvas");
             var context=canvas.getContext("2d");
-            var devicePixelRatio = window.devicePixelRatio || 1;
-            var backingStoreRatio = context.webkitBackingStorePixelRatio ||
-                    context.mozBackingStorePixelRatio ||
-                    context.msBackingStorePixelRatio ||
-                    context.oBackingStorePixelRatio ||
-                    context.backingStorePixelRatio || 1;
-            var ratio = devicePixelRatio / backingStoreRatio;
-            canvas.width=canvas.width*ratio;
-            canvas.height=canvas.height*ratio;
-            context.scale(ratio, ratio);
             var arr=[];
             var rows=0;
             var cols=0;
@@ -193,8 +183,10 @@
     </script>
 </head>
 <body onload="load()">
-    <canvas id="mycanvas" width="800" height="800">
-        <p>Your browser does not support canvas</p>
-    </canvas>
+    <div class="container">
+        <canvas id="mycanvas" width="800" height="800">
+            <p>Your browser does not support canvas</p>
+        </canvas>
+    </div>
 </body>
 </html>
