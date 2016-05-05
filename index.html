@@ -19,10 +19,9 @@
         }
         /* make any canvas fill its container */
         canvas {
-            width: 90%;
-            height: 90%;
+            width: 100%;
+            height: 100%;
             background-color: cornflowerblue;
-            position: center;
         }
     </style>
     <script type="text/javascript">
@@ -49,6 +48,15 @@
                 arr.push(rectObj);
                 cols++;
             }
+            window.addEventListener("resize", resizeCanvas, false);
+            function resizeCanvas() {
+                canvas.width = window.innerWidth*window.devicePixelRatio;
+                canvas.height = window.innerHeight*window.devicePixelRatio;
+                floor(arr,ctx);
+                right_wall(arr,ctx);
+                left_wall(arr,ctx);
+            }
+            /*
             $(window).resize(function() {
                 var width = $(this).width();
                 var height = $(this).height();
@@ -58,7 +66,7 @@
                 right_wall(arr,ctx);
                 left_wall(arr,ctx);
             });
-            //ctx.save();
+            */
             floor(arr,ctx);
             right_wall(arr,ctx);
             left_wall(arr,ctx);
