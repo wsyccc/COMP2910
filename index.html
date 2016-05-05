@@ -32,15 +32,6 @@
             var ctx=canvas.getContext("2d");
             //canvas.width=window.innerWidth*window.devicePixelRatio;
             //canvas.height=window.innerHeight*window.devicePixelRatio;
-            $(window).resize(function() {
-                var width = $(this).width();
-                var height = $(this).height();
-                $('#mycanvas').attr("width", width*window.devicePixelRatio);
-                $('#mycanvas').attr("height", height*window.devicePixelRatio);
-                floor(arr,ctx);
-                right_wall(arr,ctx);
-                left_wall(arr,ctx);
-            });
             var arr=[];
             var rows=0;
             var cols=0;
@@ -58,6 +49,15 @@
                 arr.push(rectObj);
                 cols++;
             }
+            $(window).resize(function() {
+                var width = $(this).width();
+                var height = $(this).height();
+                $('#mycanvas').attr("width", width*window.devicePixelRatio*window.devicePixelRatio);
+                $('#mycanvas').attr("height", height*window.devicePixelRatio*window.devicePixelRatio);
+                floor(arr,ctx);
+                right_wall(arr,ctx);
+                left_wall(arr,ctx);
+            });
             //ctx.save();
             floor(arr,ctx);
             right_wall(arr,ctx);
