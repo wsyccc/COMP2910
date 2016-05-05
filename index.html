@@ -33,11 +33,11 @@
             var arr=[];
             var rows=0;
             var cols=0;
-            for(var i=0; i<64; i++){
+            for(var i=0; i<36; i++){
                 var rectObj={
                     width:30,height:30,color:"grey",x:0,y:0,index:0,type:null
                 }
-                if(i%8==0){
+                if(i%6==0){
                     rows++;
                     cols=0;
                 }
@@ -89,9 +89,9 @@
                 context.fillRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
                 arr[i].type="floor";
             }
-            if(randomize(arr,context)%55 == 0){
+            if(randomize(arr,context)%29 == 0){
                 c=0;
-                for(var i=0; i<64; i++){
+                for(var i=0; i<36; i++){
                     arr[i].color = "LightGrey";
                 }
             }
@@ -100,14 +100,14 @@
             for(var i=0; i<arr.length; i++){
                 context.beginPath();
                 context.fillStyle="DarkGrey";
-                context.setTransform(1,0.4,0,1,380,145);
+                context.setTransform(1,0.4,0,1,380,204);
                 context.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
                 context.fillRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
                 arr[i].type="right_wall";
             }
-            if(randomize(arr,context)%55 == 0){
+            if(randomize(arr,context)%29 == 0){
                 c=0;
-                for(var i=0; i<64; i++){
+                for(var i=0; i<36; i++){
                     arr[i].color = "DarkGrey";
                 }
             }
@@ -117,7 +117,7 @@
             for(var i=0; i<arr.length; i++){
                 context.beginPath();
                 context.fillStyle="Grey";
-                context.setTransform(1,-0.495,0,1,140,264);
+                context.setTransform(1,-0.495,0,1,198,295);
                 context.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
                 context.fillRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
             }
@@ -127,9 +127,9 @@
          */
         function randomize(arr,context) {
             do {
-                var i = parseInt(64 * Math.random());
+                var i = parseInt(36 * Math.random());
                 //add constraint of the holes and balls
-                if ((arr[i].index < 8 && arr[i].type == "floor") || (arr[i].index > 55 && arr[i].type == "right_wall")) {
+                if ((arr[i].index < 6 && arr[i].type == "floor") || (arr[i].index > 29 && arr[i].type == "right_wall")) {
                     arr[i].color = "red";
                 }
             } while (arr[i].color == "red");
