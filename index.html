@@ -20,8 +20,8 @@
             margin: 0 auto;
             width: 100%;
             height: 100%;
-            background-color: #eddf9d;
-            overflow: hidden;
+            background-color: #eddf9d;;
+            //overflow: hidden;
             display: block;
         }
     </style>
@@ -62,6 +62,7 @@
                 floor(arr,context);
                 right_wall(arr,context);
                 left_wall(arr,context);
+                addBox(arr,context);
             }
             /*
              $(window).resize(function() {
@@ -83,8 +84,9 @@
         function floor(arr, context){
             for(var i=0; i<arr.length; i++){
                 context.beginPath();
-                context.fillStyle="#A19E9C";
+                context.fillStyle="#00E1CF";
                 context.setTransform(1,0.4,-1,0.5,410,400);
+                context.strokeStyle="black";
                 context.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
                 context.fillRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
                 arr[i].type="floor";
@@ -99,8 +101,9 @@
         function right_wall(arr,context){
             for(var i=0; i<arr.length; i++){
                 context.beginPath();
-                context.fillStyle="DarkGrey";
-                context.setTransform(1,0.4,0,1,380,204);
+                context.fillStyle="#01BEAE";
+                context.setTransform(1,0.4,0,1,380,205);
+                context.strokeStyle="white";
                 context.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
                 context.fillRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
                 arr[i].type="right_wall";
@@ -116,8 +119,8 @@
         function left_wall(arr,context){
             for(var i=0; i<arr.length; i++){
                 context.beginPath();
-                context.fillStyle="Grey";
-                context.setTransform(1,-0.495,0,1,198,295);
+                context.fillStyle="#007A6F";
+                context.setTransform(1,-0.495,0,1,200,295);
                 context.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
                 context.fillRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
             }
@@ -138,6 +141,10 @@
             context.fillStyle = arr[i].color;
             context.fillRect(arr[i].x, arr[i].y, arr[i].width, arr[i].height);
             return c++;
+        }
+        function border(context) {
+            context.beginPath();
+
         }
         /*
          function resize(canvas) {
