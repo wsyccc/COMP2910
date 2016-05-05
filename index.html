@@ -16,7 +16,7 @@
             overflow: hidden;
         }
         /* make any canvas fill its container */
-        .container,canvas{
+        canvas{
             margin: 0 auto;
             width: 100%;
             height: 100%;
@@ -24,7 +24,6 @@
             overflow: hidden;
             display: block;
         }
-
     </style>
     <script type="text/javascript">
         var c=0;
@@ -58,9 +57,9 @@
             //context.scale();
             window.addEventListener("resize", resizeCanvas, false);
             function resizeCanvas() {
-                canvas.width = window.innerWidth*window.devicePixelRatio;
-                canvas.height = window.innerHeight*window.devicePixelRatio;
-                context.scale(2,2);
+                var minLength = Math.min(window.innerWidth,window.innerHeight);
+                canvas.width = minLength*window.devicePixelRatio;
+                canvas.height = minLength*window.devicePixelRatio;
                 floor(arr,context);
                 right_wall(arr,context);
                 left_wall(arr,context);
