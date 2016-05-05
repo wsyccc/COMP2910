@@ -40,8 +40,8 @@
                 var height = $(this).height();
                 //alert('width'+width+'-height'+height);
                 //load();
-                $('#mycanvas').attr("width", width*window.devicePixelRatio+5);
-                $('#mycanvas').attr("height", height*window.devicePixelRatio);
+                $('#mycanvas').attr("width", width*window.devicePixelRatio*2);
+                $('#mycanvas').attr("height", height*window.devicePixelRatio*2);
                 floor(arr,ctx);
                 right_wall(arr,ctx);
                 left_wall(arr,ctx);
