@@ -156,10 +156,14 @@
         function addBox(arr, ctx){
             box_image = new Image();
             box_image.src = 'block_image.png';
-            ctx.translate(50, 35);
-            ctx.rotate(0.2);
+            //ctx.translate(50, 35);
+            //ctx.rotate(0.2);
+
+            //reset the previous transform
+            ctx.setTransform(1, 0, 0, 1, 0, 0)
             box_image.onload = function(){
-                ctx.drawImage(box_image, 210, 160, 50, 60);
+                ctx.drawImage(box_image, 350, 390);
+                //ctx.drawImage(box_image, 210, 160, 50, 60);
             }
         }
     </script>
