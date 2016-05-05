@@ -67,6 +67,7 @@
             floor(arr,ctx);
             right_wall(arr,ctx);
             left_wall(arr,ctx);
+            addBox(arr, ctx);
             //var myVar = setInterval(function(){floor(arr,ctx),right_wall(arr,ctx)}, 100);
         }
         function floor(arr, ctx){
@@ -168,6 +169,16 @@
             }
         }
 */
+
+        function addBox(arr, ctx){
+            box_image = new Image();
+            box_image.src = 'block_image.png';
+            ctx.translate(50, 35);
+            ctx.rotate(0.2);
+            box_image.onload = function(){
+                ctx.drawImage(box_image, 210, 160, 50, 60);
+            }
+        }
     </script>
 </head>
 <body onload="load()">
