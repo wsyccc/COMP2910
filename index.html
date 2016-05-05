@@ -31,7 +31,16 @@
         function load(){
             canvas=document.getElementById("mycanvas");
             var context=canvas.getContext("2d");
-
+            var devicePixelRatio = window.devicePixelRatio || 1;
+            var backingStoreRatio = context.webkitBackingStorePixelRatio ||
+                    context.mozBackingStorePixelRatio ||
+                    context.msBackingStorePixelRatio ||
+                    context.oBackingStorePixelRatio ||
+                    context.backingStorePixelRatio || 1;
+            var ratio = devicePixelRatio / backingStoreRatio;
+            canvas.width=canvas.width*ratio;
+            canvas.height=canvas.height*ratio;
+            context.scale(ratio, ratio);
             var arr=[];
             var rows=0;
             var cols=0;
@@ -51,18 +60,8 @@
             }
             window.addEventListener("resize", resizeCanvas, false);
             function resizeCanvas() {
-                var devicePixelRatio = window.devicePixelRatio || 1;
-                var backingStoreRatio = context.webkitBackingStorePixelRatio ||
-                        context.mozBackingStorePixelRatio ||
-                        context.msBackingStorePixelRatio ||
-                        context.oBackingStorePixelRatio ||
-                        context.backingStorePixelRatio || 1;
-                var ratio = devicePixelRatio / backingStoreRatio;
-                canvas.width=canvas.width*ratio;
-                canvas.height=canvas.height*ratio;
-                context.scale(ratio, ratio);
-                //canvas.width = window.innerWidth*window.devicePixelRatio;
-                //canvas.height = window.innerHeight*window.devicePixelRatio;
+                canvas.width = window.innerWidth*window.devicePixelRatio;
+                canvas.height = window.innerHeight*window.devicePixelRatio;
                 floor(arr,context);
                 right_wall(arr,context);
                 left_wall(arr,context);
