@@ -13,24 +13,25 @@
 
         html, body {
             margin: 0px;
+            padding: 0px;
             width: 100%;
             height: 100%;
             overflow: hidden;
         }
         /* make any canvas fill its container */
         canvas {
+            margin: 0px auto;
             width: 100%;
             height: 100%;
-            background-color: cornflowerblue;
+            background-color: #eddf9d;
         }
     </style>
     <script type="text/javascript">
         var c=0;
         function load(){
             canvas=document.getElementById("mycanvas");
-            var ctx=canvas.getContext("2d");
-            //canvas.width=window.innerWidth*window.devicePixelRatio;
-            //canvas.height=window.innerHeight*window.devicePixelRatio;
+            var context=canvas.getContext("2d");
+
             var arr=[];
             var rows=0;
             var cols=0;
@@ -50,11 +51,21 @@
             }
             window.addEventListener("resize", resizeCanvas, false);
             function resizeCanvas() {
-                canvas.width = window.innerWidth*window.devicePixelRatio;
-                canvas.height = window.innerHeight*window.devicePixelRatio;
-                floor(arr,ctx);
-                right_wall(arr,ctx);
-                left_wall(arr,ctx);
+                var devicePixelRatio = window.devicePixelRatio || 1;
+                var backingStoreRatio = context.webkitBackingStorePixelRatio ||
+                        context.mozBackingStorePixelRatio ||
+                        context.msBackingStorePixelRatio ||
+                        context.oBackingStorePixelRatio ||
+                        context.backingStorePixelRatio || 1;
+                var ratio = devicePixelRatio / backingStoreRatio;
+                canvas.width=canvas.width*ratio;
+                canvas.height=canvas.height*ratio;
+                context.scale(ratio, ratio);
+                //canvas.width = window.innerWidth*window.devicePixelRatio;
+                //canvas.height = window.innerHeight*window.devicePixelRatio;
+                floor(arr,context);
+                right_wall(arr,context);
+                left_wall(arr,context);
             }
             /*
             $(window).resize(function() {
@@ -62,45 +73,43 @@
                 var height = $(this).height();
                 $('#mycanvas').attr("width", width*window.devicePixelRatio);
                 $('#mycanvas').attr("height", height*window.devicePixelRatio);
-                floor(arr,ctx);
-                right_wall(arr,ctx);
-                left_wall(arr,ctx);
+                floor(arr,context);
+                right_wall(arr,context);
+                left_wall(arr,context);
             });
             */
-            floor(arr,ctx);
-            right_wall(arr,ctx);
-            left_wall(arr,ctx);
-            addBox(arr, ctx);
-            //var myVar = setInterval(function(){floor(arr,ctx),right_wall(arr,ctx)}, 100);
+            floor(arr,context);
+            right_wall(arr,context);
+            left_wall(arr,context);
+            addBox(arr, context);
+            //var myVar = setInterval(function(){floor(arr,context),right_wall(arr,context)}, 100);
         }
-        function floor(arr, ctx){
+        function floor(arr, context){
             for(var i=0; i<arr.length; i++){
-                ctx.beginPath();
-                ctx.fillStyle="#A19E9C";
-                ctx.setTransform(1,0.4,-1,0.5,410,400);
-                ctx.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
-                ctx.fillRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
+                context.beginPath();
+                context.fillStyle="#A19E9C";
+                context.setTransform(1,0.4,-1,0.5,410,400);
+                context.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
+                context.fillRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
                 arr[i].type="floor";
             }
-            //alert(arr[0].type);
-            if(randomize(arr,ctx)%55 == 0){
+            if(randomize(arr,context)%55 == 0){
                 c=0;
                 for(var i=0; i<64; i++){
                     arr[i].color = "LightGrey";
                 }
             }
         }
-        function right_wall(arr,ctx){
+        function right_wall(arr,context){
             for(var i=0; i<arr.length; i++){
-                ctx.beginPath();
-                ctx.fillStyle="DarkGrey";
-                ctx.setTransform(1,0.4,0,1,380,145);
-                ctx.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
-                ctx.fillRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
+                context.beginPath();
+                context.fillStyle="DarkGrey";
+                context.setTransform(1,0.4,0,1,380,145);
+                context.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
+                context.fillRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
                 arr[i].type="right_wall";
             }
-            //alert(arr[0].type);
-            if(randomize(arr,ctx)%55 == 0){
+            if(randomize(arr,context)%55 == 0){
                 c=0;
                 for(var i=0; i<64; i++){
                     arr[i].color = "DarkGrey";
@@ -108,19 +117,19 @@
             }
         }
 
-        function left_wall(arr,ctx){
+        function left_wall(arr,context){
             for(var i=0; i<arr.length; i++){
-                ctx.beginPath();
-                ctx.fillStyle="Grey";
-                ctx.setTransform(1,-0.495,0,1,140,264);
-                ctx.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
-                ctx.fillRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
+                context.beginPath();
+                context.fillStyle="Grey";
+                context.setTransform(1,-0.495,0,1,140,264);
+                context.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
+                context.fillRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
             }
         }
         /*
         generate the random cells for holes and balls
          */
-        function randomize(arr,ctx) {
+        function randomize(arr,context) {
             do {
                 var i = parseInt(64 * Math.random());
                 //add constraint of the holes and balls
@@ -130,8 +139,8 @@
             } while (arr[i].color == "red");
 
             arr[i].color = "red";
-            ctx.fillStyle = arr[i].color;
-            ctx.fillRect(arr[i].x, arr[i].y, arr[i].width, arr[i].height);
+            context.fillStyle = arr[i].color;
+            context.fillRect(arr[i].x, arr[i].y, arr[i].width, arr[i].height);
             return c++;
         }
         /*
@@ -173,13 +182,13 @@
         }
 */
 
-        function addBox(arr, ctx){
+        function addBox(arr, context){
             box_image = new Image();
             box_image.src = 'block_image.png';
-            ctx.translate(50, 35);
-            ctx.rotate(0.2);
+            context.translate(50, 35);
+            context.rotate(0.2);
             box_image.onload = function(){
-                ctx.drawImage(box_image, 210, 160, 50, 60);
+                context.drawImage(box_image, 210, 160, 50, 60);
             }
         }
     </script>
