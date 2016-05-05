@@ -7,14 +7,11 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <link rel="stylesheet" href="">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <style>
         /* make the body fill the window */
 
         html, body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
+            margin: 0px;
             height: 100%;
             overflow: hidden;
         }
@@ -24,6 +21,8 @@
             width: 100%;
             height: 100%;
             background-color: #eddf9d;
+            overflow: hidden;
+            display: block;
         }
     </style>
     <script type="text/javascript">
@@ -48,6 +47,14 @@
                 arr.push(rectObj);
                 cols++;
             }
+            if(canvas.width < window.innerWidth){
+                canvas.style.width="500px";
+                canvas.style.height=window.innerHeight;
+            }
+            //alert(window.innerWidth);
+            //alert(canvas.offsetWidth);
+            //context.translate((window.innerWidth-canvas.width)/2,(window.innerHeight-canvas.height)/2);
+            //context.scale();
             window.addEventListener("resize", resizeCanvas, false);
             function resizeCanvas() {
                 canvas.width = window.innerWidth*window.devicePixelRatio;
@@ -183,10 +190,10 @@
     </script>
 </head>
 <body onload="load()">
-    <div class="container">
+
         <canvas id="mycanvas" width="800" height="800">
             <p>Your browser does not support canvas</p>
         </canvas>
-    </div>
+
 </body>
 </html>
