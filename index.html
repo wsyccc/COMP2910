@@ -24,6 +24,7 @@
             overflow: hidden;
             display: block;
         }
+
     </style>
     <script type="text/javascript">
         var c=0;
@@ -59,6 +60,7 @@
             function resizeCanvas() {
                 canvas.width = window.innerWidth*window.devicePixelRatio;
                 canvas.height = window.innerHeight*window.devicePixelRatio;
+                context.scale(2,2);
                 floor(arr,context);
                 right_wall(arr,context);
                 left_wall(arr,context);
