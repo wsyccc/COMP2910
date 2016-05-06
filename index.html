@@ -51,6 +51,10 @@
             if(canvas.width < window.innerWidth){
                 canvas.style.width="800px";
                 canvas.style.height="800px";
+            }else {
+                canvas.style.width="700px";
+                canvas.style.height="700px";
+                context.translate(200,200);
             }
             //alert(window.innerWidth);
             //alert(canvas.offsetWidth);
