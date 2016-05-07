@@ -162,21 +162,29 @@
 //                context.drawImage(box_image, 210, 160, 50, 60);
 //            }
 //        }
-        var supportsOrientationChange = "onorientationchange" in window,
-                orientationEvent = supportsOrientationChange ? "orientationchange" : "resize";
+        jQuery(window).bind('orientationchange', function(e) {
+            switch ( window.orientation ) {
+                case 0:
+                    $('.turnDeviceNotification').css('display', 'none');
+                    // The device is in portrait mode now
+                    break;
 
-        window.addEventListener(orientationEvent, function() {
-            if(window.orientation==0)
-            {
-                document.getElementById('portrait').style.display = '';
-                document.getElementById('landscape').style.display = 'none';
+                case 180:
+                    $('.turnDeviceNotification').css('display', 'none');
+                    // The device is in portrait mode now
+                    break;
+
+                case 90:
+                    // The device is in landscape now
+                    $('.turnDeviceNotification').css('display', 'block');
+                    break;
+
+                case -90:
+                    // The device is in landscape now
+                    $('.turnDeviceNotification').css('display', 'block');
+                    break;
             }
-            else if(window.orientation==90)
-            {
-                document.getElementById('portrait').style.display = 'none';
-                document.getElementById('landscape').style.display = '';
-            }
-        }, false);
+        });
     </script>
 </head>
 <body onload="load()">
