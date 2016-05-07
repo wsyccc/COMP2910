@@ -24,6 +24,7 @@
             display: block;
         }
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script type="text/javascript">
         var c=0;
         function load(){
@@ -131,7 +132,7 @@
             do {
                 var i = parseInt(36 * Math.random());
                 //add constraint of the holes and balls
-                if ((arr[i].index < 6 && arr[i].type == "floor") || (arr[i].index > 29 && arr[i].type == "right_wall")) {
+                if (arr[i].index < 6 || (arr[i].index > 29 && arr[i].type == "right_wall")) {
                     arr[i].color = "red";
                 }
             } while (arr[i].color == "red");
@@ -142,13 +143,15 @@
             return c++;
         }
 
-        function addBox(arr, context){
-            box_image = new Image();
-            box_image.src = 'block_image.png';
-            box_image.onload = function(){
-                context.drawImage(box_image, arr[0].x, arr[0].y);
-            }
-        }
+//        function addBox(arr, context){
+//            box_image = new Image();
+//            box_image.src = 'block_image.png';
+//            box_image.onload = function(){
+//                for(var i=0; i<arr.length; i++) {
+//                    context.drawImage(box_image, arr[i].x+100, arr[i].y+200);
+//                }
+//            }
+//        }
 
 //        function addBox(arr, context){
 //            box_image = new Image();
@@ -159,6 +162,33 @@
 //                context.drawImage(box_image, 210, 160, 50, 60);
 //            }
 //        }
+        $(window).bind('orientationchange resize', function(event){
+            if (event.orientation) {
+                if (event.orientation == 'landscape') {
+                    if (window.rotation == 90) {
+                        rotate(this, -90);
+                    } else {
+                        rotate(this, 90);
+                    }
+                }
+            }
+        });
+
+        function rotate(el, degs) {
+            iedegs = degs/90;
+            if (iedegs < 0) iedegs += 4;
+            transform = 'rotate('+degs+'deg)';
+            iefilter = 'progid:DXImageTransform.Microsoft.BasicImage(rotation='+iedegs+')';
+            styles = {
+                transform: transform,
+                '-webkit-transform': transform,
+                '-moz-transform': transform,
+                '-o-transform': transform,
+                filter: iefilter,
+                '-ms-filter': iefilter
+            };
+            $(el).css(styles);
+        }
     </script>
 </head>
 <body onload="load()">
