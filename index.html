@@ -16,19 +16,13 @@
             overflow: hidden;
         }
         /* make any canvas fill its container */
-        canvas{
+        .container,canvas{
             margin: 0 auto;
             width: 100%;
+            background-color: antiquewhite;
             overflow: hidden;
             display: block;
         }
-        /*canvas{*/
-            /*margin: auto;*/
-            /*display: block;*/
-            /*width: inherit;*/
-            /*height: inherit;*/
-        /*}*/
-
     </style>
     <script type="text/javascript">
         var c=0;
@@ -41,7 +35,7 @@
             for(var i=0; i<36; i++){
                 var rectObj={
                     width:55,height:55,color:"grey",x:0,y:0,index:0,type:null
-                }
+                };
                 if(i%6==0){
                     rows++;
                     cols=0;
@@ -54,17 +48,7 @@
             }
             if(canvas.width < window.innerWidth){
                 canvas.style.width="600px";
-                canvas.style.height="800px";
-            }else {
-                canvas.style.width=window.innerWidth*window.devicePixelRatio;
-            }
-            window.addEventListener("resize", resizeCanvas, false);
-            function resizeCanvas() {
-                canvas.width = window.innerWidth*window.devicePixelRatio;
-                canvas.height = window.innerHeight*window.devicePixelRatio;
-                floor(arr,context);
-                right_wall(arr,context);
-                left_wall(arr,context);
+                canvas.style.height="1200px";
             }
             context.save();
             floor(arr,context);
@@ -75,23 +59,17 @@
             context.save();
             left_wall(arr,context);
             context.restore();
-            //addBox(arr, context);
             //var myVar = setInterval(function(){floor(arr,context),right_wall(arr,context)}, 100);
         }
         function floor(arr, context){
-            var temp = true;
             for(var i=0; i<arr.length; i++){
                 context.beginPath();
                 context.fillStyle="#00E1CF";
-                context.setTransform(1,0.5,-1,0.5,451,400);
+                context.setTransform(1,0.5,-1,0.5,455,445);
                 context.strokeStyle="black";
                 context.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
                 context.fillRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
                 arr[i].type="floor";
-                if(temp){
-                    temp=false;
-                    //alert(arr[5].x);
-                }
             }
             if(randomize(arr,context)%29 == 0){
                 c=0;
@@ -99,13 +77,12 @@
                     arr[i].color = "LightGrey";
                 }
             }
-            addBox(arr,context);
         }
         function right_wall(arr,context){
             for(var i=0; i<arr.length; i++){
                 context.beginPath();
                 context.fillStyle="#01BEAE";
-                context.setTransform(1,0.5,0,1,397,43);
+                context.setTransform(1,0.5,0,1,401,88);
                 context.strokeStyle="white";
                 context.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
                 context.fillRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
@@ -123,7 +100,7 @@
             for(var i=0; i<arr.length; i++){
                 context.beginPath();
                 context.fillStyle="#007A6F";
-                context.setTransform(1,-0.5,0,1,66,208);
+                context.setTransform(1,-0.5,0,1,70,253);
                 context.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
                 context.fillRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
             }
@@ -146,55 +123,11 @@
             return c++;
         }
 
-        /*
-         function resize(canvas) {
-         // Lookup the size the browser is displaying the canvas.
-         var displayWidth  = canvas.clientWidth;
-         var displayHeight = canvas.clientHeight;
-
-         // Check if the canvas is not the same size.
-         if (canvas.width  != displayWidth ||
-         canvas.height != displayHeight) {
-
-         // Make the canvas the same size
-         canvas.width  = displayWidth;
-         canvas.height = displayHeight;
-         }
-         }
-         */
-        /*
-         function resize(gl) {
-         var realToCSSPixels = window.devicePixelRatio || 1;
-         // Lookup the size the browser is displaying the canvas in CSS pixels
-         // and compute a size needed to make our drawingbuffer match it in
-         // device pixels.
-         var displayWidth  = Math.floor(gl.canvas.clientWidth  * realToCSSPixels);
-         var displayHeight = Math.floor(gl.canvas.clientHeight * realToCSSPixels);
-
-         // Check if the canvas is not the same size.
-         if (gl.canvas.width  != displayWidth ||
-         gl.canvas.height != displayHeight) {
-
-         // Make the canvas the same size
-         gl.canvas.width  = displayWidth;
-         gl.canvas.height = displayHeight;
-
-         // Set the viewport to match
-         gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-         }
-         }
-         */
-
-        function addBox(arr, ctx){
+        function addBox(arr, context){
             box_image = new Image();
             box_image.src = 'block_image.png';
-            //ctx.translate(50, 35);
-            //ctx.rotate(0.2);
-            //reset the previous transform
-            //ctx.setTransform(1, 0, 0, 1, 0, 0);
             box_image.onload = function(){
-                ctx.drawImage(box_image, arr[0].x, arr[0].y);
-                //ctx.drawImage(box_image, 210, 160, 50, 60);
+                context.drawImage(box_image, arr[0].x, arr[0].y);
             }
         }
 
@@ -211,7 +144,7 @@
 </head>
 <body onload="load()">
 <div class="container">
-    <canvas id="mycanvas" width="800" height="1000">
+    <canvas id="mycanvas" width="800" height="1500">
         <p>Your browser does not support canvas</p>
     </canvas>
 </div>
