@@ -56,8 +56,8 @@
                     canvas.style.width="600px";
                     canvas.style.height="1200px";
                 } else {
-                    canvas.style.width = "410px";
-                    canvas.style.height = "770px";
+                    canvas.style.width = window.innerWidth*window.devicePixelRatio;
+                    canvas.style.height = window.innerWidth*window.devicePixelRatio;
                 }
                 context.save();
                 floor(arr,context);
