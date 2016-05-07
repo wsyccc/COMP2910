@@ -50,6 +50,25 @@
                 canvas.style.width="600px";
                 canvas.style.height="1200px";
             }
+            window.addEventListener("resize", resizeCanvas, false);
+            function resizeCanvas() {
+                if(canvas.width < window.innerWidth){
+                    canvas.style.width="600px";
+                    canvas.style.height="1200px";
+                } else {
+                    canvas.style.width = "410px";
+                    canvas.style.height = "770px";
+                }
+                context.save();
+                floor(arr,context);
+                context.restore();
+                context.save();
+                right_wall(arr,context);
+                context.restore();
+                context.save();
+                left_wall(arr,context);
+                context.restore();
+            }
             context.save();
             floor(arr,context);
             context.restore();
