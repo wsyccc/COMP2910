@@ -60,25 +60,13 @@
                     canvas.style.width = window.innerWidth*window.devicePixelRatio;
                     canvas.style.height = window.innerWidth*window.devicePixelRatio;
                 }
-                context.save();
                 floor(arr,context);
-                context.restore();
-                context.save();
                 right_wall(arr,context);
-                context.restore();
-                context.save();
                 left_wall(arr,context);
-                context.restore();
             }
-            context.save();
             floor(arr,context);
-            context.restore();
-            context.save();
             right_wall(arr,context);
-            context.restore();
-            context.save();
             left_wall(arr,context);
-            context.restore();
             //var myVar = setInterval(function(){floor(arr,context),right_wall(arr,context)}, 100);
         }
         function floor(arr, context){
@@ -91,12 +79,14 @@
                 context.fillRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
                 arr[i].type="floor";
             }
+            context.save();
             if(randomize(arr,context)%29 == 0){
                 c=0;
                 for(var i=0; i<36; i++){
                     arr[i].color = "LightGrey";
                 }
             }
+            addBox(arr,context);
         }
         function right_wall(arr,context){
             for(var i=0; i<arr.length; i++){
@@ -143,15 +133,16 @@
             return c++;
         }
 
-//        function addBox(arr, context){
-//            box_image = new Image();
-//            box_image.src = 'block_image.png';
-//            box_image.onload = function(){
-//                for(var i=0; i<arr.length; i++) {
-//                    context.drawImage(box_image, arr[i].x+100, arr[i].y+200);
-//                }
-//            }
-//        }
+        function addBox(arr, context){
+            box_image = new Image();
+            box_image.src = 'block_image.png';
+            box_image.onload = function(){
+                context.restore();
+                for(var i=0; i<arr.length; i++) {
+                    context.drawImage(box_image, arr[i].x, arr[i].y);
+                }
+            }
+        }
 
 //        function addBox(arr, context){
 //            box_image = new Image();
