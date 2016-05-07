@@ -41,7 +41,7 @@
             var cols=0;
             for(var i=0; i<36; i++){
                 var rectObj={
-                    width:50,height:50,color:"grey",x:0,y:0,index:0,type:null
+                    width:55,height:55,color:"grey",x:0,y:0,index:0,type:null
                 }
                 if(i%6==0){
                     rows++;
@@ -55,7 +55,7 @@
             }
             if(canvas.width < window.innerWidth){
                 canvas.style.width="600px";
-                canvas.style.height="600px";
+                canvas.style.height="800px";
             }else {
                 canvas.style.width=window.innerWidth*window.devicePixelRatio;
             }
@@ -84,7 +84,7 @@
             for(var i=0; i<arr.length; i++){
                 context.beginPath();
                 context.fillStyle="#00E1CF";
-                context.setTransform(1,0.5,-1,0.5,410,400);
+                context.setTransform(1,0.5,-1,0.5,451,400);
                 context.strokeStyle="black";
                 context.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
                 context.fillRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
@@ -106,7 +106,7 @@
             for(var i=0; i<arr.length; i++){
                 context.beginPath();
                 context.fillStyle="#01BEAE";
-                context.setTransform(1,0.5,0,1,361,75);
+                context.setTransform(1,0.5,0,1,397,43);
                 context.strokeStyle="white";
                 context.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
                 context.fillRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
@@ -124,7 +124,7 @@
             for(var i=0; i<arr.length; i++){
                 context.beginPath();
                 context.fillStyle="#007A6F";
-                context.setTransform(1,-0.5,0,1,60,225);
+                context.setTransform(1,-0.5,0,1,66,208);
                 context.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
                 context.fillRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
             }
@@ -212,7 +212,7 @@
 </head>
 <body onload="load()">
 <div class="container">
-    <canvas id="mycanvas" width="800" height="800">
+    <canvas id="mycanvas" width="800" height="1000">
         <p>Your browser does not support canvas</p>
     </canvas>
 </div>
