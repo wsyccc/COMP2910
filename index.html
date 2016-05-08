@@ -64,10 +64,15 @@
                 floor(arr,context);
                 right_wall(arr,context);
                 left_wall(arr,context);
+                frame_horizontal(context);
+                frame_vertical(context);
             }
             floor(arr,context);
             right_wall(arr,context);
             left_wall(arr,context);
+            frame_horizontal(context);
+            frame_vertical(context);
+            //addBox(arr,context);
             //var myVar = setInterval(function(){floor(arr,context),right_wall(arr,context)}, 100);
         }
         function floor(arr, context){
@@ -80,24 +85,20 @@
                 context.fillRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
                 arr[i].type="floor";
             }
-            context.save();
             if(randomize(arr,context)%29 == 0){
                 c=0;
                 for(var i=0; i<36; i++){
                     arr[i].color = "LightGrey";
                 }
             }
-            //addBox(arr,context);
-            frame_bottom_left(arr,context);
-            frame_bottom_right(arr,context);
-            frame_left_vertical(arr,context);
+
 
         }
         function right_wall(arr,context){
             for(var i=0; i<arr.length; i++){
                 context.beginPath();
-                context.fillStyle="#01BEAE";
-                context.setTransform(1,0.5,0,1,401,88);
+                context.fillStyle="#02B9AA";
+                context.setTransform(1,0.5,0,1,399,88);
                 context.strokeStyle="white";
                 context.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
                 context.fillRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
@@ -110,58 +111,81 @@
                 }
             }
         }
-
         function left_wall(arr,context){
             for(var i=0; i<arr.length; i++){
                 context.beginPath();
                 context.fillStyle="#007A6F";
-                context.setTransform(1,-0.5,0,1,70,253);
+                context.setTransform(1,-0.5,0,1,71,253);
                 context.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
                 context.fillRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
             }
         }
-        /*
-         generate the random cells for holes and balls
-         */
-        function randomize(arr,context) {
-            do {
-                var i = parseInt(36 * Math.random());
-                //add constraint of the holes and balls
-                if (arr[i].index < 6 || (arr[i].index > 29 && arr[i].type == "right_wall")) {
-                    arr[i].color = "red";
-                }
-            } while (arr[i].color == "red");
+        function frame_horizontal(context) {
+            context.beginPath();
+            var grd_left=context.createLinearGradient(20,20,20,55);
+            grd_left.addColorStop(0,"#02B9AA");
+            grd_left.addColorStop(0.5,"#EAFBD8");
+            grd_left.addColorStop(1,"antiquewhite");
+            context.fillStyle=grd_left;
+            context.strokeStyle="antiquewhite";
+            //bottom_left
+            context.setTransform(1,0.5,0,2,15,610);
+            for(var i=0; i<7; i++) {
+                context.strokeRect(i*55,0,55,55);
+                context.fillRect(i*55,0, 55, 55);
+            }
+            var grd_right=context.createLinearGradient(20,20,20,55);
+            grd_right.addColorStop(0,"#007A6F");
+            grd_right.addColorStop(0.5,"#EAFBD8");
+            grd_right.addColorStop(1,"antiquewhite");
+            context.fillStyle=grd_right;
+            //bottom_right
+            context.setTransform(1,-0.5,0,2,400,803);
+            for(var i=0; i<7; i++) {
+                context.strokeRect(i*55,0,55,55);
+                context.fillRect(i*55,0,55,55);
+            }
+            context.fillStyle="#00E1CF";
+            context.strokeStyle="white";
+            //top_right
+            context.setTransform(1,0.5,-1,0.5,455,116);
+            for(var i=0; i<6; i++) {
+                context.strokeRect(i*55,0,55,55);
+                context.fillRect(i*55,0, 55, 55);
+            }
+            //top_left
+            context.setTransform(1,-0.5,1,0.5,16,281);
+            for(var i=0; i<7; i++) {
+                context.strokeRect(i*55,0,55,55);
+                context.fillRect(i*55,0,55,55);
+            }
 
-            arr[i].color = "red";
-            context.fillStyle = arr[i].color;
-            context.fillRect(arr[i].x, arr[i].y, arr[i].width, arr[i].height);
-            return c++;
         }
-        function frame_bottom_left(arr,context) {
+//        function frame_bottom_right(arr,context) {
+//            context.beginPath();
+//            context.fillStyle="green";
+//            context.setTransform(1,-0.5,0,1,400,749);
+//            for(var i=0; i<6; i++) {
+//                context.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
+//                context.fillRect(arr[i].x, arr[i].y, arr[i].width, arr[i].height);
+//            }
+//        }
+        function frame_vertical(context) {
             context.beginPath();
-            context.fillStyle="green";
-            context.setTransform(1,0.5,0,1,70,583);
+            context.fillStyle="#007A6F";
+            context.strokeStyle="antiquewhite";
+            //right
+            context.setTransform(1,-0.5,0,1,730,309);
             for(var i=0; i<6; i++) {
-                context.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
-                context.fillRect(arr[i].x, arr[i].y, arr[i].width, arr[i].height);
+                context.strokeRect(0,i*55,55,55);
+                context.fillRect(0, i*55, 55, 55);
             }
-        }
-        function frame_bottom_right(arr,context) {
-            context.beginPath();
-            context.fillStyle="green";
-            context.setTransform(1,-0.5,0,1,400,749);
+            //left
+            context.fillStyle="#02B9AA";
+            context.setTransform(1,0.5,0,1,15,280);
             for(var i=0; i<6; i++) {
-                context.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
-                context.fillRect(arr[i].x, arr[i].y, arr[i].width, arr[i].height);
-            }
-        }
-        function frame_left_vertical(arr,context) {
-            context.beginPath();
-            context.fillStyle="green";
-            context.setTransform(1,-0.5,0,1,400,749);
-            for(var i=0; i<6; i++) {
-                context.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
-                context.fillRect(arr[i].x, arr[i].y, arr[i].width, arr[i].height);
+                context.strokeRect(0,i*55,55,55);
+                context.fillRect(0, i*55, 55, 55);
             }
         }
 
@@ -169,7 +193,6 @@
             box_image = new Image();
             box_image.src = 'block_image.png';
             box_image.onload = function(){
-                context.restore();
                 context.setTransform(1, 0, 0, 1, 0, 0);
 //                for(var i=0; i<arr.length; i++) {
 //                    context.drawImage(box_image, arr[i].x, arr[i].y);
@@ -239,33 +262,38 @@
             }
         }
 
-//        function addBox(arr, context){
-//            box_image = new Image();
-//            box_image.src = 'block_image.png';
-//            context.translate(50, 35);
-//            context.rotate(0.2);
-//            box_image.onload = function(){
-//                context.drawImage(box_image, 210, 160, 50, 60);
-//            }
-//        }
+        /*
+         generate the random cells for holes and balls
+         */
+        function randomize(arr,context) {
+            do {
+                var i = parseInt(36 * Math.random());
+                //add constraint of the holes and balls
+                if (arr[i].index < 6 || (arr[i].index > 29 && arr[i].type == "right_wall")) {
+                    arr[i].color = "red";
+                }
+            } while (arr[i].color == "red");
+
+            arr[i].color = "red";
+            context.fillStyle = arr[i].color;
+            context.fillRect(arr[i].x, arr[i].y, arr[i].width, arr[i].height);
+            return c++;
+        }
         $(window).bind('orientationchange', function(e) {
             switch ( window.orientation ) {
                 case 0:
                     $('.turnDeviceNotification').css('display', 'none');
                     // The device is in portrait mode now
                     break;
-
                 case 180:
                     $('.turnDeviceNotification').css('display', 'none');
                     // The device is in portrait mode now
                     break;
-
                 case 90:
                     // The device is in landscape now
                     $('.turnDeviceNotification').css('display', 'block');
                     alert("Fuck you! This game doesn't fit for landscape view, Please turn your phone back to portrait mode!");
                     break;
-
                 case -90:
                     // The device is in landscape now
                     $('.turnDeviceNotification').css('display', 'block');
