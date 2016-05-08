@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="">
     <style>
         /* make the body fill the window */
+
         html, body {
             margin: 0px;
             height: 100%;
@@ -26,7 +27,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script type="text/javascript">
         var c=0;
-        var rectObj;
         function load(){
             canvas=document.getElementById("mycanvas");
             var context=canvas.getContext("2d");
@@ -34,7 +34,7 @@
             var rows=0;
             var cols=0;
             for(var i=0; i<36; i++){
-                rectObj={
+                var rectObj={
                     width:55,height:55,color:"grey",x:0,y:0,index:0,type:null
                 };
                 if(i%6==0){
@@ -51,7 +51,7 @@
                 canvas.style.width="600px";
                 canvas.style.height="1200px";
             }
-            window.addEventListener("resize", resizeCanvas, false);
+            window.addEventListener("resize", getCursorPosition, false);
             function resizeCanvas() {
                 if(canvas.width < window.innerWidth){
                     canvas.style.width="600px";
@@ -69,19 +69,18 @@
             left_wall(arr,context);
             //var myVar = setInterval(function(){floor(arr,context),right_wall(arr,context)}, 100);
 
-
-
-             //test redraw of arr[0] using calculations
-             context.setTransform(1, 0, 0, 1, 0, 0);
-             context.fillStyle="#FFC0CB";
-             context.beginPath();
-             context.moveTo(400,472.5);
-             context.lineTo(455,500);
-             context.lineTo(400,527.5);
-             context.lineTo(345,500);
-             context.closePath();
-             context.fill();
-
+            /*
+            //test redraw of arr[0] using calculations
+            context.setTransform(1, 0, 0, 1, 0, 0);
+            context.fillStyle="#FFC0CB";
+            context.beginPath();
+            context.moveTo(400,472.5);
+            context.lineTo(455,500);
+            context.lineTo(400,527.5);
+            context.lineTo(345,500);
+            context.closePath();
+            context.fill();
+            */
 
 
             // get mouse clicked coordinates
@@ -104,10 +103,7 @@
                     arr[i].color = "LightGrey";
                 }
             }
-            //addBox(arr,context);
-            frame_bottom_left(arr,context);
-            frame_bottom_right(arr,context);
-            frame_left_vertical(arr,context);
+            addBox(arr,context);
         }
         function right_wall(arr,context){
             for(var i=0; i<arr.length; i++){
@@ -126,6 +122,7 @@
                 }
             }
         }
+
         function left_wall(arr,context){
             for(var i=0; i<arr.length; i++){
                 context.beginPath();
@@ -146,48 +143,23 @@
                     arr[i].color = "red";
                 }
             } while (arr[i].color == "red");
+
             arr[i].color = "red";
             context.fillStyle = arr[i].color;
             context.fillRect(arr[i].x, arr[i].y, arr[i].width, arr[i].height);
             return c++;
         }
-        function frame_bottom_left(arr,context) {
-            context.beginPath();
-            context.fillStyle="green";
-            context.setTransform(1,0.5,0,1,70,583);
-            for(var i=0; i<6; i++) {
-                context.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
-                context.fillRect(arr[i].x, arr[i].y, arr[i].width, arr[i].height);
-            }
-        }
-        function frame_bottom_right(arr,context) {
-            context.beginPath();
-            context.fillStyle="green";
-            context.setTransform(1,-0.5,0,1,400,749);
-            for(var i=0; i<6; i++) {
-                context.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
-                context.fillRect(arr[i].x, arr[i].y, arr[i].width, arr[i].height);
-            }
-        }
-        function frame_left_vertical(arr,context) {
-            context.beginPath();
-            context.fillStyle="green";
-            context.setTransform(1,-0.5,0,1,400,749);
-            for(var i=0; i<6; i++) {
-                context.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
-                context.fillRect(arr[i].x, arr[i].y, arr[i].width, arr[i].height);
-            }
-        }
+
         function addBox(arr, context){
             box_image = new Image();
             box_image.src = 'block_image.png';
             box_image.onload = function(){
                 context.restore();
                 context.setTransform(1, 0, 0, 1, 0, 0);
-//                for(var i=0; i<arr.length; i++) {
-//                    context.drawImage(box_image, arr[i].x, arr[i].y);
-//                }
-                //first box
+                for(var i=0; i<arr.length; i++) {
+                    //context.drawImage(box_image, arr[i].x, arr[i].y);
+                }
+                /*
                 context.drawImage(box_image, 343, 415,115,115);
                 //1 right
                 context.drawImage(box_image, 343 + (1*55), 415 + (1*27),115,115);
@@ -199,6 +171,7 @@
                 context.drawImage(box_image, 343 + (4*55), 415 + (4*27),115,115);
                 //5 right
                 context.drawImage(box_image, 343 + (5*55), 415 + (5*27),115,115);
+
                 //1 left
                 context.drawImage(box_image, 343 - (1*55), 415 + (1*27),115,115);
                 //2 left
@@ -209,6 +182,7 @@
                 context.drawImage(box_image, 343 - (4*55), 415 + (4*27),115,115);
                 //5 left
                 context.drawImage(box_image, 343 - (5*55), 415 + (5*27),115,115);
+
                 //directly down
                 //1 down
                 context.drawImage(box_image, 343, 415 + (1*55),115,115);
@@ -218,6 +192,7 @@
                 context.drawImage(box_image, 343, 415 + (3*55),115,115);
                 //4 down
                 context.drawImage(box_image, 343, 415 + (4*55),115,115);
+
                 //left down
                 //1
                 context.drawImage(box_image, 343 - (4*55), 415 + (3*55),115,115);
@@ -227,6 +202,7 @@
                 context.drawImage(box_image, 343 - (2*55), 415 + (4*55),115,115);
                 //4
                 context.drawImage(box_image, 343 - (1*55), 415 + (4.5*55),115,115);
+
                 //right down
                 //1
                 context.drawImage(box_image, 343 + (4*55), 415 + (3*55),115,115);
@@ -236,20 +212,13 @@
                 context.drawImage(box_image, 343 + (2*55), 415 + (4*55),115,115);
                 //4
                 context.drawImage(box_image, 343 + (1*55), 415 + (4.5*55),115,115);
+
                 //must be drawn last (5) down because of overlapping
                 //5 down
                 context.drawImage(box_image, 343, 415 + (5*55),115,115);
+                */
             }
         }
-        //        function addBox(arr, context){
-        //            box_image = new Image();
-        //            box_image.src = 'block_image.png';
-        //            context.translate(50, 35);
-        //            context.rotate(0.2);
-        //            box_image.onload = function(){
-        //                context.drawImage(box_image, 210, 160, 50, 60);
-        //            }
-        //        }
 
         /**
          * @return {number}
@@ -263,6 +232,15 @@
             return -1;
         }
 
+//        function addBox(arr, context){
+//            box_image = new Image();
+//            box_image.src = 'block_image.png';
+//            context.translate(50, 35);
+//            context.rotate(0.2);
+//            box_image.onload = function(){
+//                context.drawImage(box_image, 210, 160, 50, 60);
+//            }
+//        }
 
         function getCursorPosition(e) {
             var x;
@@ -282,9 +260,9 @@
             y -= canvas.offsetTop;
 
             alert("x:" + x + " y:" + y);
+
+            return [x,y]
         }
-
-
 
         $(window).bind('orientationchange', function(e) {
             switch ( window.orientation ) {
@@ -292,15 +270,18 @@
                     $('.turnDeviceNotification').css('display', 'none');
                     // The device is in portrait mode now
                     break;
+
                 case 180:
                     $('.turnDeviceNotification').css('display', 'none');
                     // The device is in portrait mode now
                     break;
+
                 case 90:
                     // The device is in landscape now
                     $('.turnDeviceNotification').css('display', 'block');
                     alert("Fuck you! This game doesn't fit for landscape view, Please turn your phone back to portrait mode!");
                     break;
+
                 case -90:
                     // The device is in landscape now
                     $('.turnDeviceNotification').css('display', 'block');
