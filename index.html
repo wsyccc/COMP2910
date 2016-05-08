@@ -27,6 +27,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script type="text/javascript">
         var c=0;
+        var rectObj;
         function load(){
             canvas=document.getElementById("mycanvas");
             var context=canvas.getContext("2d");
@@ -34,7 +35,7 @@
             var rows=0;
             var cols=0;
             for(var i=0; i<36; i++){
-                var rectObj={
+                rectObj={
                     width:55,height:55,color:"grey",x:0,y:0,index:0,type:null
                 };
                 if(i%6==0){
@@ -103,7 +104,11 @@
                     arr[i].color = "LightGrey";
                 }
             }
-            addBox(arr,context);
+            //addBox(arr,context);
+            frame_bottom_left(arr,context);
+            frame_bottom_right(arr,context);
+            frame_left_vertical(arr,context);
+
         }
         function right_wall(arr,context){
             for(var i=0; i<arr.length; i++){
@@ -148,6 +153,33 @@
             context.fillStyle = arr[i].color;
             context.fillRect(arr[i].x, arr[i].y, arr[i].width, arr[i].height);
             return c++;
+        }
+        function frame_bottom_left(arr,context) {
+            context.beginPath();
+            context.fillStyle="green";
+            context.setTransform(1,0.5,0,1,70,583);
+            for(var i=0; i<6; i++) {
+                context.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
+                context.fillRect(arr[i].x, arr[i].y, arr[i].width, arr[i].height);
+            }
+        }
+        function frame_bottom_right(arr,context) {
+            context.beginPath();
+            context.fillStyle="green";
+            context.setTransform(1,-0.5,0,1,400,749);
+            for(var i=0; i<6; i++) {
+                context.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
+                context.fillRect(arr[i].x, arr[i].y, arr[i].width, arr[i].height);
+            }
+        }
+        function frame_left_vertical(arr,context) {
+            context.beginPath();
+            context.fillStyle="green";
+            context.setTransform(1,-0.5,0,1,400,749);
+            for(var i=0; i<6; i++) {
+                context.strokeRect(arr[i].x,arr[i].y,arr[i].width,arr[i].height);
+                context.fillRect(arr[i].x, arr[i].y, arr[i].width, arr[i].height);
+            }
         }
 
         function addBox(arr, context){
