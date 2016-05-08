@@ -51,7 +51,7 @@
                 canvas.style.width="600px";
                 canvas.style.height="1200px";
             }
-            window.addEventListener("resize", resizeCanvas, false);
+            window.addEventListener("resize", getCursorPosition, false);
             function resizeCanvas() {
                 if(canvas.width < window.innerWidth){
                     canvas.style.width="600px";
@@ -68,6 +68,23 @@
             right_wall(arr,context);
             left_wall(arr,context);
             //var myVar = setInterval(function(){floor(arr,context),right_wall(arr,context)}, 100);
+
+            /*
+            //test redraw of arr[0] using calculations
+            context.setTransform(1, 0, 0, 1, 0, 0);
+            context.fillStyle="#FFC0CB";
+            context.beginPath();
+            context.moveTo(400,472.5);
+            context.lineTo(455,500);
+            context.lineTo(400,527.5);
+            context.lineTo(345,500);
+            context.closePath();
+            context.fill();
+            */
+
+
+            // get mouse clicked coordinates
+            canvas.addEventListener("click", getCursorPosition, false);
         }
         function floor(arr, context){
             for(var i=0; i<arr.length; i++){
@@ -140,9 +157,9 @@
                 context.restore();
                 context.setTransform(1, 0, 0, 1, 0, 0);
 //                for(var i=0; i<arr.length; i++) {
-//                    context.drawImage(box_image, arr[i].x, arr[i].y);
+//                    //context.drawImage(box_image, arr[i].x, arr[i].y);
 //                }
-                //first box
+
                 context.drawImage(box_image, 343, 415,115,115);
                 //1 right
                 context.drawImage(box_image, 343 + (1*55), 415 + (1*27),115,115);
@@ -186,9 +203,6 @@
                 //4
                 context.drawImage(box_image, 343 - (1*55), 415 + (4.5*55),115,115);
 
-
-
-
                 //right down
                 //1
                 context.drawImage(box_image, 343 + (4*55), 415 + (3*55),115,115);
@@ -202,9 +216,19 @@
                 //must be drawn last (5) down because of overlapping
                 //5 down
                 context.drawImage(box_image, 343, 415 + (5*55),115,115);
-
-
             }
+        }
+
+        /**
+         * @return {number}
+         */
+        function CheckIfClicked(x,y, arr){
+            for(i = 0; i < 36; i++) {
+                if (x >= arr.x && x <= arr.x2)
+                    if (y >= arr.y && y <= arr.y2)
+                        return i;
+            }
+            return -1;
         }
 
 //        function addBox(arr, context){
@@ -216,6 +240,29 @@
 //                context.drawImage(box_image, 210, 160, 50, 60);
 //            }
 //        }
+
+        function getCursorPosition(e) {
+            var x;
+            var y;
+            if (e.pageX || e.pageY) {
+                x = e.pageX;
+                y = e.pageY;
+            }
+            else {
+                x = e.clientX + document.body.scrollLeft +
+                        document.documentElement.scrollLeft;
+                y = e.clientY + document.body.scrollTop +
+                        document.documentElement.scrollTop;
+            }
+            // Convert to coordinates relative to the canvas
+            x -= canvas.offsetLeft;
+            y -= canvas.offsetTop;
+
+            alert("x:" + x + " y:" + y);
+
+            return [x,y]
+        }
+
         $(window).bind('orientationchange', function(e) {
             switch ( window.orientation ) {
                 case 0:
